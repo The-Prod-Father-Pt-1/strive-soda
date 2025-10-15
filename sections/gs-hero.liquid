@@ -1,0 +1,527 @@
+{%- liquid
+  assign firstBlock = section.blocks[0]
+  assign isImageFirst = false
+  assign isVideoFirst = false
+  assign blockName = nil
+  assign videoHeight = nil
+
+  case firstBlock.type
+    when 'image'        assign isImageFirst = true
+    when 'video'
+      assign isVideoFirst = true
+      assign blockName = 'html5video'
+      if section.settings.cropVideo
+        assign videoHeight = '--vidCropO:hidden;--vidCropH:var(--heroHeight);'
+      endif
+    when 'video_external'
+      assign blockName = 'externalvideo'
+  endcase
+-%}
+
+{%- liquid 
+  capture style
+    echo section.settings.heroMetaH1Bg | prepend: '--heroMetaH1Bg:' | append: ';'
+    echo section.settings.heroMetaH1Color | prepend: '--heroMetaH1Color:' | append: ';'
+
+    assign heroHeight = section.settings.heroHeight
+    if section.settings.heroHeight == 'uncropped'
+      assign heroHeight = 'var(--heroHeight-f)'
+    endif
+    echo heroHeight | prepend: '--heroHeight:' | append: ';'
+    echo videoHeight
+  endcapture
+-%}
+
+{%- if section.settings.heroHeight == 'uncropped' -%}
+  <style>
+    @media (min-width:778px){
+      .hero.hero[sid="{{ section.id }}"]{ --heroHeight-f:auto!important; aspect-ratio:initial; overflow:visible }
+      .hero[sid="{{ section.id }}"] picture img{ all:unset; display:block; width:100% }
+    }
+  </style>
+{%- endif -%}
+
+<section class="hero {{ blockName }}" style="{{ style }}" sid="{{ section.id }}">
+
+  {% for block in section.blocks %}
+    {%- case block.type -%}
+
+    {%- when 'image' -%}
+      {%- if isImageFirst -%}
+        {%- if block.settings.imgClickable and section.settings.url != empty -%}
+          <style>.hero[sid="{{ section.id }}"]{ --heroMetaPointerEvents:none }</style>
+          <a href="{{ section.settings.url }}" class="no-style" tabindex="-1">
+        {%- endif -%}
+        <picture>
+          {%- assign imgMobile = block.settings.imageMobile -%}
+          {%- assign imgDesktop = block.settings.image -%}
+          {%- if imgDesktop != nil or imgMobile != nil -%}
+            {%- if imgMobile != nil -%}
+              <source srcset="{{ imgMobile | image_url: width:970 }} 1x, {{ imgMobile | image_url: width:1280 }} 2x" media="(max-width:777px)">
+            {%- endif -%}
+            {%- liquid
+              assign width = 2750
+              assign widths = '750,1000,1280,1500,1750,2000,2500,2750'
+              render 'global-img' img: imgDesktop, alt: section.settings.title, width: width, widths: widths
+            -%}
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'svg-placeholder' }}
+          {%- endif -%}
+        </picture>
+        {%- if block.settings.imgClickable and section.settings.url != empty -%}</a>{%- endif -%}
+      {%- endif -%}
+
+    {%- when 'video' -%}
+      {%- if isVideoFirst -%}
+        {%- liquid
+          assign vid = block.settings.video
+          assign vidMobile = block.settings.videoMobile | default: nil
+          assign loop = block.settings.videoLoop
+          assign autoplay = block.settings.videoAutoplay
+          assign muted = block.settings.videoMute
+          assign clickToPlay = block.settings.clickToPlay
+          assign controls = block.settings.playPause
+          render 'global-video' vid: vid, vidMobile: vidMobile, loop: loop, autoplay: autoplay, muted: muted, clickToPlay: clickToPlay, controls: controls
+        -%}
+      {%- endif -%}
+
+    {%- endcase -%}
+  {% endfor %}
+
+  <!-- Teal content panel + CTAs -->
+  <div class="meta" {%- if section.settings.imgClickable and section.settings.url != empty -%}style="pointer-events:none"{%- endif -%}>
+    <div class="content-wrapper">
+      <!-- Text content -->
+      <div class="text-content">
+        {%- if section.settings.title != empty -%}
+          <h2 class="hero-h1 hero-h1--desktop">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.content != empty -%}
+          <p class="hero-sub hero-sub--desktop">{{ section.settings.content }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.headline_mobile != blank -%}
+          <h2 class="hero-h1 hero-h1--mobile">{{ section.settings.headline_mobile }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subhead_mobile != blank -%}
+          <p class="hero-sub hero-sub--mobile">{{ section.settings.subhead_mobile }}</p>
+        {%- endif -%}
+      </div>
+
+      <!-- CTA buttons -->
+      <div class="hero-banner__btns">
+        {%- if section.settings.cta != empty -%}
+          <a href="{{ section.settings.url }}" class="button btn-large btn-orange" data-cta="hero_primary">
+            {{ section.settings.cta }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta2 != empty -%}
+          <a href="{{ section.settings.url2 | default: '#science' }}" class="button btn-large btn-teal" data-cta="hero_secondary">
+            {{ section.settings.cta2 }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  :root{ --tiffany-blue:#0ABAB5; --strive-orange:#FF7A00; --charcoal:#111; }
+  html { scroll-behavior: smooth; }
+
+  /* REMOVE GAP - Hero touches header */
+  .hero[sid="{{ section.id }}"]{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* CTA look - CONSISTENT SIZING */
+  .button.btn-large{
+    border-radius:999px;
+    padding:18px 40px;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    box-shadow:0 8px 24px rgba(0,0,0,.15);
+    transition:all .3s cubic-bezier(0.4, 0, 0.2, 1);
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center;
+    color:#fff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+  .btn-orange{ 
+    background:var(--strive-orange); 
+    color:#fff; 
+    border:2px solid var(--strive-orange); 
+  }
+  .btn-orange:hover{ 
+    background:transparent; 
+    color:var(--strive-orange); 
+    border-color:var(--strive-orange);
+    transform: translateY(-2px);
+    box-shadow:0 12px 32px rgba(255,122,0,.25);
+  }
+  .btn-teal{ 
+    background:var(--tiffany-blue); 
+    color:#fff; 
+    border:2px solid var(--tiffany-blue); 
+  }
+  .btn-teal:hover{ 
+    background:transparent; 
+    color:var(--tiffany-blue);
+    border-color:var(--tiffany-blue);
+    transform: translateY(-2px);
+    box-shadow:0 12px 32px rgba(10,186,181,.25);
+  }
+
+  /* CTA wrapper - consistent across breakpoints */
+  .hero-banner__btns{
+    display:flex; 
+    flex-direction: column;
+    gap:16px; 
+    align-items:center;
+    width: 100%;
+    margin-top: clamp(20px, 3vw, 40px);
+  }
+
+  /* ===== MOBILE: vertical split (top panel teal, media bottom) ===== */
+  .hero-h1--mobile, .hero-sub--mobile{ display:none; }
+  .hero-h1--desktop, .hero-sub--desktop{ display:block; }
+
+  @media (max-width: 777px){
+    /* Use dynamic viewport height for better mobile browser support */
+    .hero[sid="{{ section.id }}"]{
+      min-height: 100dvh !important;
+      height: 100dvh !important;
+      position: relative !important;
+      overflow: hidden !important;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Teal panel takes top 50% */
+    .hero[sid="{{ section.id }}"] .meta{
+      position: relative !important;
+      flex: 0 0 50%;
+      height: 50%;
+      z-index: 2; 
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .hero[sid="{{ section.id }}"] .content-wrapper{
+      width: 100%; 
+      min-height: 100%;
+      background: var(--tiffany-blue);
+      color: #fff;
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center;
+      padding: clamp(16px, 4vw, 24px) 20px;
+      box-sizing: border-box;
+    }
+    
+    .hero[sid="{{ section.id }}"] .text-content{
+      width: 100%;
+      max-width: 620px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    
+    /* Media takes bottom 50% */
+    .hero[sid="{{ section.id }}"] video,
+    .hero[sid="{{ section.id }}"] picture,
+    .hero[sid="{{ section.id }}"] picture img{
+      position: absolute !important;
+      left: 0;
+      bottom: 0;
+      width: 100% !important;
+      height: 50% !important;
+      object-fit: cover !important;
+      object-position: 50% 50%;
+      z-index: 1;
+    }
+    
+    .hero-h1--desktop, .hero-sub--desktop{ display:none; }
+    .hero-h1--mobile, .hero-sub--mobile{ display:block; }
+
+    .hero-h1--mobile{
+      margin: 0 0 8px; 
+      font-size: clamp(26px, 5.5vw, 34px); 
+      line-height: 1.05; 
+      font-weight: 900; 
+      text-transform: uppercase;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: -0.01em;
+    }
+    
+    .hero-sub--mobile{
+      margin: 0; 
+      max-width: 620px; 
+      font-size: clamp(13px, 3.5vw, 15px); 
+      line-height: 1.35; 
+      opacity: .95;
+      color: #fff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .hero-banner__btns{
+      width: 100%; 
+      max-width: 560px; 
+      margin-top: clamp(14px, 3vw, 18px);
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    
+    .button.btn-large{ 
+      max-width: 100%;
+      padding: 14px 24px; 
+      font-size: 14px;
+      white-space: nowrap;
+    }
+  }
+
+  /* Extra small screens - even tighter */
+  @media (max-width: 400px){
+    .hero[sid="{{ section.id }}"] .content-wrapper{
+      padding: 14px 16px;
+    }
+    
+    .hero-h1--mobile{
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+    
+    .hero-sub--mobile{
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    
+    .hero-banner__btns{
+      margin-top: 12px;
+      gap: 8px;
+    }
+    
+    .button.btn-large{
+      padding: 12px 20px;
+      font-size: 13px;
+    }
+  }
+
+  /* ===== DESKTOP (>=1024px): full-bleed horizontal split ===== */
+  @media (min-width: 1024px){
+    .hero[sid="{{ section.id }}"]{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: minmax(640px, var(--heroHeight, 88vh));
+      gap: 0 !important;
+      padding: 0 !important;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+    }
+
+    /* Constrain clickable link to media area only - prevents blocking header */
+    .hero[sid="{{ section.id }}"] > a {
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+      display: contents;
+    }
+
+    .hero[sid="{{ section.id }}"] picture,
+    .hero[sid="{{ section.id }}"] iframe,
+    .hero[sid="{{ section.id }}"] video,
+    .hero[sid="{{ section.id }}"] .lazyframe{
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0 !important;
+    }
+    
+    .hero[sid="{{ section.id }}"] .meta{
+      position: static !important;
+      grid-column: 1 / 2; 
+      grid-row: 1 / 2;
+      background: var(--tiffany-blue);
+      color: #fff;
+      border-radius: 0 !important;
+      min-height: 100%;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      padding: clamp(40px, 6vw, 80px) clamp(36px, 5vw, 70px);
+      pointer-events: auto;
+    }
+    
+    .hero[sid="{{ section.id }}"] .content-wrapper{
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .hero[sid="{{ section.id }}"] .text-content{
+      width: 100%;
+    }
+    
+    .hero[sid="{{ section.id }}"] .hero-h1--desktop,
+    .hero[sid="{{ section.id }}"] .hero-sub--desktop{
+      display: none !important;
+    }
+    
+    .hero[sid="{{ section.id }}"] .hero-h1--mobile{
+      display: block; 
+      color: #fff; 
+      text-align: left;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: clamp(36px, 4.5vw, 64px);
+      line-height: 1.05;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin: 0 0 clamp(16px, 2vw, 24px);
+    }
+    
+    .hero[sid="{{ section.id }}"] .hero-sub--mobile{
+      display: block; 
+      color: #fff; 
+      text-align: left;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: clamp(16px, 1.5vw, 20px);
+      line-height: 1.4;
+      font-weight: 400;
+      margin: 0;
+      opacity: 0.95;
+    }
+    
+    .hero[sid="{{ section.id }}"] .hero-banner__btns{
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: clamp(24px, 3vw, 40px);
+    }
+    
+    .button.btn-large{
+      max-width: 380px;
+    }
+  }
+
+  /* Always keep hero button text white */
+  .hero[sid="{{ section.id }}"] .button,
+  .hero[sid="{{ section.id }}"] .button:hover{
+    color:#fff !important;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "max_blocks": 2,
+  "disabled_on": { "groups": ["header", "footer", "aside"] },
+  "settings": [
+    { "type": "header", "content": "Notice", "info": "This section supports images and self-hosted videos. To switch between image and video blocks, first remove the block you're currently using." },
+    { "type": "header", "content": "Content" },
+
+    { "type": "select", "id": "heroHeight", "label": "Banner height", "default": "var(--heroHeight-f)", "options": [
+      { "value": "var(--heroHeight-s)", "label": "Small" },
+      { "value": "var(--heroHeight-m)", "label": "Medium" },
+      { "value": "var(--heroHeight-l)", "label": "Large" },
+      { "value": "var(--heroHeight-f)", "label": "Full" },
+      { "value": "uncropped", "label": "Full uncropped" }
+    ]},
+    { "type": "checkbox", "id": "cropVideo", "label": "Crop video height", "default": false },
+
+    { "type": "text", "id": "title", "label": "Heading (desktop/tablet)", "default": "MEET HYDRATION SODA" },
+    { "type": "text", "id": "content", "label": "Subheading (desktop/tablet)", "default": "Flavor-packed refreshment with real honey and electrolytes." },
+
+    { "type": "text", "id": "headline_mobile", "label": "Mobile headline", "default": "MEET THE SODA FOR MOVERS, SHAKERS, DOERS" },
+    { "type": "text", "id": "subhead_mobile",  "label": "Mobile subhead",  "default": "Better-for-you soda. Built to hydrate." },
+
+    { "type": "text", "id": "cta", "label": "Primary CTA label", "default": "Shop Flavors" },
+    { "type": "url",  "id": "url", "label": "Primary CTA link", "default": "/collections/all" },
+
+    { "type": "text", "id": "cta2", "label": "Secondary CTA label", "default": "What is Hydration Soda?" },
+    { "type": "url",  "id": "url2", "label": "Secondary CTA link" },
+
+    { "type": "select", "id": "contentPosition", "label": "Content position - desktop", "default": "center between",
+      "options": [
+        { "value": "top left", "label": "Top left" },
+        { "value": "top center", "label": "Top center" },
+        { "value": "top right", "label": "Top right" },
+        { "value": "center left", "label": "Middle Left" },
+        { "value": "center", "label": "Middle Center" },
+        { "value": "center right", "label": "Middle Right" },
+        { "value": "bottom left", "label": "Bottom left" },
+        { "value": "bottom center", "label": "Bottom center" },
+        { "value": "bottom right", "label": "Bottom right" },
+        { "value": "top between", "label": "Top space-between" },
+        { "value": "center between", "label": "Middle space-between" },
+        { "value": "bottom between", "label": "Bottom space-between" }
+      ]
+    },
+
+    { "type": "select", "id": "contentDirection", "label": "Content direction - desktop", "default": "row",
+      "options": [ { "value": "row", "label": "Row" }, { "value": "column", "label": "Column" } ] },
+
+    { "type": "text_alignment", "id": "textAlignment", "label": "Text alignment - desktop", "default": "left" },
+
+    { "type": "select", "id": "contentPositionMob", "label": "Content position - mobile", "default": "center between",
+      "options": [
+        { "value": "top center", "label": "Top" },
+        { "value": "center", "label": "Middle" },
+        { "value": "bottom center", "label": "Bottom" },
+        { "value": "center between", "label": "Space between" }
+      ]
+    },
+
+    { "type": "select", "id": "contentDirectionMob", "label": "Content direction - mobile", "default": "column",
+      "options": [ { "value": "row", "label": "Row" }, { "value": "column", "label": "Column" } ] },
+
+    { "type": "text_alignment", "id": "textAlignmentMob", "label": "Text alignment - mobile", "default": "center" },
+
+    { "type": "header", "content": "Appearance" },
+    { "type": "color", "id": "heroMetaH1Bg", "label": "Background color", "default": "#FFFFFF" },
+    { "type": "color", "id": "heroMetaH1Color", "label": "Text color", "default": "#000000" },
+    { "type": "checkbox", "id": "heroMetaH1hasBg", "label": "Enable heading background", "default": false }
+  ],
+  "blocks": [
+    { "type": "image", "name": "Image", "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Notice", "info": "To use to the video block, remove this block first." },
+        { "type": "image_picker", "id": "image", "label": "Desktop", "info": "2000 x 1110px recommended" },
+        { "type": "image_picker", "id": "imageMobile", "label": "Mobile", "info": "970 x 1110px recommended" },
+        { "type": "checkbox", "id": "imgClickable", "label": "Clickable image", "default": false }
+      ]
+    },
+    { "type": "video", "name": "Video", "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Notice", "info": "To use to the image block, remove this block first." },
+        { "type": "video", "id": "video", "label": "Desktop", "info": "Videos with a 16:9 aspect ratio are recommended." },
+        { "type": "video", "id": "videoMobile", "label": "Mobile", "info": "Videos with a 9:16 aspect ratio are recommended." },
+        { "type": "checkbox", "id": "videoLoop", "label": "Loop", "default": false },
+        { "type": "checkbox", "id": "videoMute", "label": "Mute", "default": true },
+        { "type": "checkbox", "id": "videoAutoplay", "label": "Autoplay", "default": false, "info": "Autoplay is not supported on many mobile browsers." },
+        { "type": "checkbox", "id": "clickToPlay", "label": "Enable click to play", "default": true, "info": "Tap the video container to toggle play/pause." },
+        { "type": "checkbox", "id": "playPause", "label": "Enable play/pause button", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+"name": "Hero banner", "blocks": [ { "type": "image" } ] }
+  ]
+}
+{% endschema %}
