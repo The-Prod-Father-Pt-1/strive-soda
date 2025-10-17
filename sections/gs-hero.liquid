@@ -136,6 +136,12 @@
     margin-bottom: 0 !important;
   }
 
+  /* Account for fixed header on homepage - prevent header overlap */
+  body.hpfixed .hero[sid="{{ section.id }}"],
+  body.hpabsolute .hero[sid="{{ section.id }}"]{
+    padding-top: var(--headerGroupHeight, 0px);
+  }
+
   /* CTA look - CONSISTENT SIZING */
   .button.btn-large{
     border-radius:999px;
@@ -203,20 +209,36 @@
       overflow: hidden !important;
       display: flex;
       flex-direction: column;
+      margin: 0 !important;
+      gap: 0 !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
     }
-    
-    /* Teal panel takes top 50% */
+
+    /* On mobile with fixed/absolute header, adjust height calculation */
+    body.hpfixed .hero[sid="{{ section.id }}"],
+    body.hpabsolute .hero[sid="{{ section.id }}"]{
+      min-height: calc(100dvh - var(--headerGroupHeight, 0px)) !important;
+      height: calc(100dvh - var(--headerGroupHeight, 0px)) !important;
+      padding-top: var(--headerGroupHeight, 0px) !important;
+    }
+
+    /* Teal panel - ORDER 1 (takes top 50%, flush with header) */
     .hero[sid="{{ section.id }}"] .meta{
+      order: 1;
       position: relative !important;
       flex: 0 0 50%;
       height: 50%;
-      z-index: 2; 
+      z-index: 2;
       padding: 0;
+      margin: 0 !important;
       display: flex;
       align-items: center;
       justify-content: flex-start;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      font-size: initial;
+      line-height: initial;
     }
     
     .hero[sid="{{ section.id }}"] .content-wrapper{
@@ -239,18 +261,29 @@
       flex-shrink: 0;
     }
     
-    /* Media takes bottom 50% */
+    /* Media - ORDER 2 (takes bottom 50%, below teal panel, flush) */
+    .hero[sid="{{ section.id }}"] video-player{
+      order: 2;
+      position: absolute !important;
+      left: 0;
+      top: 50% !important;
+      width: 100% !important;
+      height: 50% !important;
+      z-index: 1;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+    }
+
     .hero[sid="{{ section.id }}"] video,
     .hero[sid="{{ section.id }}"] picture,
     .hero[sid="{{ section.id }}"] picture img{
-      position: absolute !important;
-      left: 0;
-      bottom: 0;
       width: 100% !important;
-      height: 50% !important;
+      height: 100% !important;
       object-fit: cover !important;
       object-position: 50% 50%;
-      z-index: 1;
+      margin: 0 !important;
+      padding: 0 !important;
     }
     
     .hero-h1--desktop, .hero-sub--desktop{ display:none; }
@@ -319,6 +352,121 @@
     }
   }
 
+  /* ===== TABLET (778px - 1023px): Hybrid layout to prevent header overlap ===== */
+  @media (min-width: 778px) and (max-width: 1023px){
+    .hero[sid="{{ section.id }}"]{
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+      margin: 0 !important;
+      padding: 0 !important;
+      gap: 0 !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
+    }
+
+    /* Ensure proper spacing for fixed/absolute headers - padding on hero container */
+    body.hpfixed .hero[sid="{{ section.id }}"],
+    body.hpabsolute .hero[sid="{{ section.id }}"]{
+      padding-top: var(--headerGroupHeight, 0px) !important;
+      min-height: 100vh;
+    }
+
+    /* Teal content panel - ORDER 1 (appears first visually, flush with header) */
+    .hero[sid="{{ section.id }}"] .meta{
+      order: 1;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background: var(--tiffany-blue);
+      color: #fff;
+      padding: clamp(32px, 5vw, 60px) clamp(24px, 4vw, 40px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 !important;
+      font-size: initial;
+      line-height: initial;
+    }
+
+    .hero[sid="{{ section.id }}"] .content-wrapper{
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero[sid="{{ section.id }}"] .text-content{
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Show mobile content on tablet */
+    .hero-h1--desktop, .hero-sub--desktop{ display:none; }
+    .hero-h1--mobile, .hero-sub--mobile{ display:block; }
+
+    .hero-h1--mobile{
+      font-size: clamp(32px, 4.5vw, 44px);
+      line-height: 1.1;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-sub--mobile{
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.4;
+      opacity: .95;
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Media - ORDER 2 (appears second visually, below teal panel, flush - NO GAP) */
+    .hero[sid="{{ section.id }}"] video-player{
+      order: 2;
+      position: relative;
+      width: 100%;
+      min-height: 400px;
+      height: auto;
+      z-index: 1;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block;
+    }
+
+    .hero[sid="{{ section.id }}"] video,
+    .hero[sid="{{ section.id }}"] picture,
+    .hero[sid="{{ section.id }}"] picture img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block;
+    }
+
+    .hero-banner__btns{
+      width: 100%;
+      max-width: 600px;
+      margin-top: clamp(20px, 3vw, 32px);
+      gap: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .button.btn-large{
+      max-width: 360px;
+      padding: 16px 36px;
+      font-size: 15px;
+    }
+  }
+
   /* ===== DESKTOP (>=1024px): full-bleed horizontal split ===== */
   @media (min-width: 1024px){
     .hero[sid="{{ section.id }}"]{
@@ -330,6 +478,13 @@
       width: 100vw;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
+    }
+
+    /* With fixed/absolute header, adjust grid height to account for header */
+    body.hpfixed .hero[sid="{{ section.id }}"],
+    body.hpabsolute .hero[sid="{{ section.id }}"]{
+      grid-template-rows: minmax(640px, calc(var(--heroHeight, 88vh) - var(--headerGroupHeight, 0px)));
+      padding-top: var(--headerGroupHeight, 0px);
     }
 
     /* Constrain clickable link to media area only - prevents blocking header */
