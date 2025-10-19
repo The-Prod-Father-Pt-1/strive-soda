@@ -693,8 +693,8 @@ Date: ___________________________
 **Why Not Us Labs, LLC**
 
 **Primary Contact:** Gavin McNamara
-**Email:** [your-email]@whynotuslabs.com
-**Phone:** [your-phone]
+**Email:** gavin@whynotus.ai
+**Phone:** (667) 494-1303
 **Website:** whynotuslabs.com
 **Address:** [your-business-address]
 
@@ -703,7 +703,7 @@ Monday-Friday: 9am-6pm EST
 Emergency Support: 24/7 (Enterprise tier)
 
 **Invoicing:**
-[invoicing-email]@whynotuslabs.com
+gavin@whynotus.ai
 
 ---
 
