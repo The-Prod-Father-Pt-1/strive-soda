@@ -353,3 +353,161 @@ If white space gaps appear between sections with custom elements:
 - Changes committed and pushed to repository
 - Live on production theme (#182679339300)
 - Local dev environment synced
+
+
+### October 21-22, 2025 - Plan of Action & Documentation Update
+
+**Meeting Review & Documentation:**
+
+1. **October 21, 2025 Meeting with Jack & Chris**
+   - Reviewed full meeting transcript and summary
+   - Extracted Strive-related action items (filtered out Hive holiday campaign)
+   - Created comprehensive Plan of Action (POA) document
+   - Updated CHECKLIST.md with new priorities and timeline
+
+2. **Documentation Structure Created:**
+   - **PLAN-OF-ACTION.md** - Complete POA with 4 phases (P0-P2 + SEO)
+   - **CHECKLIST.md** - Updated task tracking with Oct 21 meeting decisions
+   - **Meeting notes** - Stored in `/docs/meeting-notes/10-21-2025/`
+     - `summary.md` - High-level meeting summary
+     - `transcript.md` - Full timestamped transcript (Motion AI)
+     - `video.mp4` - Recording (832MB)
+
+**Key Decisions from Oct 21 Meeting:**
+
+**Approved:**
+- ✓ Checkerboard design with Tiffany Blue + Orange for About Us page
+- ✓ Footer phone widget design (keep as-is, including mobile)
+- ✓ Rounded button corners as site-wide standard
+- ✓ "75% of adults" heading style as template for all major headings
+- ✓ Poly Sans Mono font for nutrition panels and science content
+- ✓ Store locator as critical priority (multi-page CTA)
+- ✓ "Soda-first" messaging approach for homepage
+
+**New Priorities (P0 - Due Friday, Oct 25):**
+
+1. **Responsiveness Bugs:**
+   - Product page scroll bug (can't scroll to top)
+   - Peach image height issue
+   - Homepage video white space on desktop resize
+   - Homepage video white space on mobile
+
+2. **Design Consistency:**
+   - Standardize button corner radius across entire site
+   - Fix font weight & size consistency across all pages
+   - Import and apply Poly Sans Mono brand font from Drive Soda Toolkit
+
+**Content Updates (P1 - Week of Oct 28-Nov 1):**
+
+1. **Homepage:**
+   - Implement "soda-first" messaging (taste first, hydration second)
+   - Smooth transition to Science page
+   - 3D can integration (if timeline allows)
+
+2. **Science Page:**
+   - Create "75% Dehydration" section with solution CTA
+   - Redesign "Why Honey?" section to be visually "sexier"
+   - Add hover effects to honey benefit boxes
+   - Update electrolyte bubble colors from June Shine placeholders to Strive brand
+
+3. **About Us Page:**
+   - Create complete "Strive Story" content (Jack & Gavin call Oct 22)
+   - Add updated images from studio shoot (Chris sending by Oct 25)
+   - Consolidate layout - remove empty placeholder sections
+   - Add surf video with "Born and raised in San Diego" vibe
+
+4. **Product Pages:**
+   - Update Nutrition Facts: Peach Perfect & Tropical Recharge = 10g carbs, 8g sugars
+   - Verify image quality and consistency
+
+5. **Navigation & Store Locator:**
+   - Add Store Locator to header navigation (dropdown or standalone)
+   - Implement Store Locator as CTA on multiple pages
+   - Integrate store locator data from Chris (expected Oct 25)
+   - Future-proof for retail expansion (currently San Diego only)
+
+**Strategic Context:**
+
+Chris's retail vision:
+> "Retail sales should outpace direct to consumer sales within the next 12 months. In the long run, if we look 3 years in the future, retail is going to destroy direct to consumer every day of the week."
+
+This drives the priority of store locator as a critical feature for long-term retail strategy.
+
+**Timeline & Milestones:**
+
+**This Week (Oct 21-25):**
+- Tuesday, Oct 22: Jack & Gavin call (About Us story content)
+- Friday, Oct 25:
+  - UI/UX fixes complete (buttons, fonts, responsiveness)
+  - Chris sends photo album + store locator data
+
+**Next Week (Oct 28 - Nov 1):**
+- Full week: Gavin dedicates entire week to Strive polish
+- Ongoing: Content refinement with Jack
+- By Nov 1: Strive site polished and launch-ready
+
+**Brand Assets Received:**
+- Drive Soda Toolkit (Dropbox) - All brand fonts
+- Poly Sans Mono font files (for sciency typeface)
+- Brand book (reference for font hierarchy)
+
+**Pending from Chris:**
+- Photo album from studio shoot (by Oct 25)
+- Store locator data (by Oct 25)
+
+**Process Improvements:**
+- Started using Motion AI notetaker in meetings (Oct 21 forward)
+- Captures action items automatically with timestamps
+- Reduces manual note-taking burden
+- Files stored in `/docs/meeting-notes/[DATE]/`
+
+**Compensation Discussion:**
+- Ongoing conversation between Jack & Gavin
+- Topics: Fair rate for work to date, hourly vs. project pricing, long-term retention
+- Gavin: Learning business side, wants to ensure fair pricing
+- Jack: Wants long-term month-to-month arrangement
+
+**Files Reference:**
+
+**Documentation:**
+- `PLAN-OF-ACTION.md` - Complete POA with all meeting details
+- `CHECKLIST.md` - Updated task tracking with new priorities
+- `docs/meeting-notes/10-21-2025/` - Meeting transcript and summary
+
+**Key Files to Modify (from POA):**
+
+Homepage:
+- `templates/index.json` - Soda-first messaging
+- `sections/gs-hero.liquid` - Video white space fixes
+
+Science Page:
+- `sections/science-checkerboard-fold.liquid` - 75% dehydration section
+- `sections/science-honey.liquid` - Redesign for visual impact
+- `sections/science-electrolytes.liquid` - Brand color updates
+
+About Us:
+- `templates/page.about.json` - About Us template
+- `sections/about-checkerboard-fold.liquid` - Checkerboard sections ✓
+
+Product Pages:
+- `sections/product-nutrition-label.liquid` - Nutrition data updates
+- `templates/product.json` - Scroll bug fix
+
+Global:
+- `snippets/global-fonts.liquid` - Poly Sans Mono import
+- `assets/app.css` - Font declarations, button components
+- `sections/header.liquid` - Store locator navigation
+
+**Success Criteria:**
+
+Site is "done" when:
+- [ ] All P0 responsiveness bugs fixed
+- [ ] Complete design consistency (buttons, fonts, headings)
+- [ ] About Us page fully populated with real content
+- [ ] Store locator integrated and functional
+- [ ] All nutrition facts accurate
+- [ ] Homepage messaging reflects "soda-first" approach
+- [ ] Science page visually engaging with hover effects
+- [ ] Mobile experience optimized
+- [ ] Brand identity consistent throughout
+- [ ] Stakeholders (Jack, Chris) approve final design
