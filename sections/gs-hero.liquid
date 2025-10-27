@@ -475,9 +475,13 @@
       grid-template-rows: minmax(640px, var(--heroHeight, 88vh));
       gap: 0 !important;
       padding: 0 !important;
-      width: 100vw;
-      margin-left: calc(50% - 50vw);
-      margin-right: calc(50% - 50vw);
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin-left: calc(50% - 50vw) !important;
+      margin-right: calc(50% - 50vw) !important;
+      position: relative;
+      left: 0;
+      right: 0;
     }
 
     /* With fixed/absolute header, adjust grid height to account for header */
