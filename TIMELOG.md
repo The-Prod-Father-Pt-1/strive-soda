@@ -22,10 +22,11 @@
 - Documented small commit workflow practices
 
 **Git Commits:**
-- (pending) "Add DEV-WORKFLOW.md and TIMELOG.md - Setup local development environment"
+- "Add development workflow and time tracking documentation" (SHA: b1e0c8b)
+- "Sync About Us page content from production theme" (SHA: 679d386)
 
 **Shopify Changes:**
-- None (setup only)
+- None (setup and documentation only)
 
 **Notes:**
 - Local environment now matches production exactly
