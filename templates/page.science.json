@@ -9,14 +9,6 @@
  */
 {
   "sections": {
-    "science_test_visual": {
-      "type": "science-test-fold",
-      "settings": {
-        "heading": "There's a Better Way to Hydrate",
-        "subtext": "Introducing hydration soda—the first drink that combines real electrolytes with 100% organic honey. No synthetics. No compromises.",
-        "show_cta": false
-      }
-    },
     "science_fold_1": {
       "type": "science-checkerboard-fold",
       "blocks": {
@@ -42,7 +34,7 @@
           "type": "heading",
           "settings": {
             "column": "right",
-            "heading": "This Is Why You Choose Strive",
+            "heading": "What Is a Hydration Soda?",
             "font_size": 56,
             "text_color": "#ffffff"
           }
@@ -51,7 +43,7 @@
           "type": "text",
           "settings": {
             "column": "right",
-            "content": "<p>Strive Soda is the first hydration soda — designed to keep you refreshed with real electrolytes and clean ingredients.</p><p>We combine <strong>180mg of electrolytes</strong> (sodium, potassium, magnesium) with <strong>100% organic wildflower honey</strong> for natural sweetness. No synthetic sugars. No artificial ingredients. Just delicious flavor that actually helps you stay hydrated.</p><p><strong>It's the soda you want to drink that happens to hydrate you.</strong></p>",
+            "content": "<p><strong>Strive is the first hydration soda.</strong></p><p>It's a soda that tastes amazing AND helps you stay hydrated.</p><p>Here's how it works:</p><p><strong>1. It's a Soda</strong><br>Refreshing. Flavorful. Fizzy. Made for soda occasions — not the gym.</p><p><strong>2. It Hydrates You</strong><br>180mg of electrolytes (sodium, potassium, magnesium) help your body stay hydrated throughout the day.</p><p><strong>3. Sweetened with Organic Honey</strong><br>100% organic wildflower honey. No synthetic sugars. No artificial ingredients. Just clean, natural sweetness.</p><p><strong>The soda you want to drink that actually helps your body.</strong></p>",
             "font_size": 18,
             "text_color": "#ffffff"
           }
@@ -152,7 +144,6 @@
     }
   },
   "order": [
-    "science_test_visual",
     "science_fold_1",
     "science_fold_2",
     "science_electrolytes",
