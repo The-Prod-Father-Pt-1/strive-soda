@@ -25,7 +25,7 @@
           "type": "text",
           "settings": {
             "column": "left",
-            "content": "<p><strong>Empower Your Every Day.</strong></p><p>At Strive, we know every sip counts. That's why we've created drinks that deliver what you need: hydration and energy without compromise. Using organic wildflower honey and thoughtfully chosen ingredients, Strive is your partner in living a life full of purpose and balance.</p>",
+            "content": "<p><strong>The Founder's Story</strong></p><p>Strive Soda began with one simple truth: Jack Espy loves soda. Always has. But he also loves feeling good — staying hydrated, active, and balanced. Somewhere along the way, he realized most people walk around dehydrated and reaching for drinks that don't actually help. So he decided to change that.</p>",
             "font_size": 18,
             "text_color": "#ffffff"
           }
@@ -71,7 +71,7 @@
           "type": "text",
           "settings": {
             "column": "right",
-            "content": "<p>Through perseverance and a commitment to his vision, Jack overcame obstacles to create Strive's first product line. Each drink reflects his dedication to natural wellness and innovation, made possible by a team equally passionate about health and sustainability.</p><p>Born in San Diego, California, Strive is a hydration soda for the movers, the shakers, and the tastemakers.</p>",
+            "content": "<p>Jack built Strive to be more than just another beverage. It's a hydration-forward soda—crafted for people who want incredible flavor and real function. Each can is packed with electrolytes to keep your body fueled and your mind sharp.</p><p>Instead of cutting corners with synthetic sugars like sucralose or aspartame, Jack chose 100% organic wildflower honey — because nature already nailed sweetness. It's his way of proving that health and flavor don't have to live in separate worlds.</p><p>Born in San Diego, California, Strive was made for the movers, the shakers, the doers, and the everyday strivers chasing what's next.</p><p><strong>Strive isn't just a drink.</strong><br>It's a mindset — a reminder that what you put in your body should help you feel your best, and that progress tastes a little sweeter when you earn it.</p>",
             "font_size": 18,
             "text_color": "#ffffff"
           }
@@ -104,7 +104,7 @@
           "type": "text",
           "settings": {
             "column": "left",
-            "content": "<p>To create better for you beverages that keep you hydrated, energized, and ready for whatever life throws your way.</p><p>Our everyday essentials are flavor and hydration. Delivered through real ingredients you can trust.</p>",
+            "content": "<p>To craft drinks that keep you hydrated, fueled, and feeling alive — no compromises, no fake stuff, just real ingredients that work as hard as you do.</p><p>Because when you're striving toward what's next, you deserve a soda that shows up for you.</p>",
             "font_size": 18,
             "text_color": "#ffffff"
           }
@@ -131,7 +131,7 @@
       "type": "science-cta",
       "settings": {
         "heading": "Ready to Join the Strive Movement?",
-        "description": "Experience hydration soda that's designed for your active lifestyle.",
+        "description": "Experience better-for-you soda that's designed for your active lifestyle.",
         "cta_text": "Shop All Flavors",
         "cta_link": "/collections/all"
       }
