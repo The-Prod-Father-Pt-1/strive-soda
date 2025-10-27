@@ -57,6 +57,35 @@
 
 ---
 
+#### Session 3: Document Content Specifications from Chris (CMO)
+**Time:** 1:02 PM - 1:20 PM (18 minutes)
+**Tasks:**
+- Reviewed docs folder structure for existing meeting notes
+- Confirmed October 21 meeting notes exist (Chris & Jack meeting)
+- Created `/docs/meeting-notes/10-27-2025/` folder
+- Saved comprehensive content specifications from Chris as markdown
+- Documented brand foundation (boilerplate, mission, mantra)
+- Documented content hierarchy (Soda First → Better-For-You → Clean Ingredients)
+- Created complete homepage structure guide (6 sections with exact copy)
+- Created product page copy guide (Peach Perfect & Tropical Recharge)
+- Built 40+ item implementation checklist
+- Created README linking specs to existing CHECKLIST.md tasks
+- Identified that Chris's content IS part of next to-dos (P1 priority)
+
+**Git Commits:**
+- (pending) "Add October 27 content specifications from Chris (CMO)"
+
+**Shopify Changes:**
+- None (documentation only)
+
+**Notes:**
+- Chris's specifications provide exact implementation details for CHECKLIST P1 tasks
+- Homepage updates and product pages are primary focus after P0 fixes complete
+- New sections to add: "What Is a Hydration Soda?", Compare table, Social proof
+- Content ready to implement starting week of Oct 28 - Nov 1
+
+---
+
 ## Time Tracking Template
 
 Copy this template for each new session:
@@ -84,10 +113,10 @@ Copy this template for each new session:
 
 ## Billing Summary
 
-**October 2025 Total:** 0.5 hours (30 minutes)
+**October 2025 Total:** 0.8 hours (48 minutes)
 
 ### Breakdown by Date:
-- Oct 27: 0.5 hours (Session 1: 22 min + Session 2: 8 min)
+- Oct 27: 0.8 hours (Session 1: 22 min + Session 2: 8 min + Session 3: 18 min)
 
 ---
 
