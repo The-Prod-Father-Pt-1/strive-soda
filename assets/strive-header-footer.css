@@ -12,6 +12,12 @@
     box-shadow: 0 1px 0 0 rgba(0,0,0,.1);
 }
 
+/* Override boxed layout for header - always span full width */
+body[layout-boxed="true"] .main-header {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
 .main-header header {
     padding: 1rem 2rem;
 }
