@@ -27,11 +27,39 @@
         <div class="wihs-benefits">
           {%- for block in section.blocks -%}
             <div class="wihs-benefit-card" {{ block.shopify_attributes }}>
-              {%- if block.settings.icon != blank -%}
-                <div class="wihs-benefit-icon">
-                  {{ block.settings.icon }}
-                </div>
+
+              {%- comment -%} Hover Image Background (if provided) {%- endcomment -%}
+              {%- if block.settings.hover_image != blank -%}
+                <div class="wihs-hover-image" style="background-image: url('{{ block.settings.hover_image | image_url: width: 600 }}');"></div>
               {%- endif -%}
+
+              {%- comment -%} Icon Display {%- endcomment -%}
+              <div class="wihs-benefit-icon">
+                {%- case block.settings.icon_svg -%}
+                  {%- when 'droplet' -%}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                    </svg>
+                  {%- when 'honey' -%}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.18L18.82 8 12 11.82 5.18 8 12 4.18zM5 9.83l6 3.34v6.65l-6-3.34V9.83zm8 10v-6.65l6-3.34v6.65l-6 3.34z"/>
+                    </svg>
+                  {%- when 'sparkle' -%}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 .587l3.668 7.568L24 9.748l-6.064 5.852 1.48 8.4L12 19.748 4.584 24l1.48-8.4L0 9.748l8.332-1.593z"/>
+                    </svg>
+                  {%- when 'target' -%}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <circle cx="12" cy="12" r="6"/>
+                      <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                  {%- else -%}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                    </svg>
+                {%- endcase -%}
+              </div>
 
               {%- if block.settings.title != blank -%}
                 <h3 class="wihs-benefit-title">{{ block.settings.title }}</h3>
@@ -105,10 +133,34 @@
       "name": "Benefit",
       "settings": [
         {
-          "type": "html",
-          "id": "icon",
-          "label": "Icon (SVG or Emoji)",
-          "default": "💧"
+          "type": "select",
+          "id": "icon_svg",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "droplet",
+              "label": "Water Droplet (Hydration)"
+            },
+            {
+              "value": "honey",
+              "label": "Honeycomb (Natural Energy)"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle (Clean Ingredients)"
+            },
+            {
+              "value": "target",
+              "label": "Target (Lifestyle)"
+            }
+          ],
+          "default": "droplet"
+        },
+        {
+          "type": "image_picker",
+          "id": "hover_image",
+          "label": "Hover Image (Optional)",
+          "info": "Lifestyle image that appears on hover. Recommended: 600x600px"
         },
         {
           "type": "text",
@@ -132,7 +184,7 @@
         {
           "type": "benefit",
           "settings": {
-            "icon": "💧",
+            "icon_svg": "droplet",
             "title": "Support Hydration",
             "description": "Infused with balanced electrolytes like sodium, potassium, and magnesium to help your body stay refreshed"
           }
@@ -140,7 +192,7 @@
         {
           "type": "benefit",
           "settings": {
-            "icon": "🍯",
+            "icon_svg": "honey",
             "title": "Deliver Natural Energy",
             "description": "Sweetened with organic wildflower honey for smooth, steady energy, plus antioxidants, trace vitamins, and minerals"
           }
@@ -148,7 +200,7 @@
         {
           "type": "benefit",
           "settings": {
-            "icon": "✨",
+            "icon_svg": "sparkle",
             "title": "Keep Ingredients Clean",
             "description": "Free from artificial flavors, colors, and preservatives"
           }
@@ -156,7 +208,7 @@
         {
           "type": "benefit",
           "settings": {
-            "icon": "🎯",
+            "icon_svg": "target",
             "title": "Fit Your Lifestyle",
             "description": "Perfect for long days, travel, or anytime you want a flavorful, refreshing drink"
           }

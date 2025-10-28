@@ -60,6 +60,8 @@
   padding: 32px 24px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .wihs-benefit-card:hover {
@@ -67,10 +69,50 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
+/* Hover Image Background */
+.wihs-hover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.wihs-benefit-card:hover .wihs-hover-image {
+  opacity: 0.15;
+}
+
+/* Ensure content appears above hover image */
+.wihs-benefit-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* SVG Icon Styling */
 .wihs-benefit-icon {
-  font-size: 48px;
-  margin: 0 0 16px 0;
-  line-height: 1;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wihs-benefit-icon svg {
+  width: 100%;
+  height: 100%;
+  color: var(--tiffany-blue, #0ABAB5);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.wihs-benefit-card:hover .wihs-benefit-icon svg {
+  color: var(--orange, #FF7A00);
+  transform: scale(1.1);
 }
 
 .wihs-benefit-title {
@@ -143,7 +185,8 @@
   }
 
   .wihs-benefit-icon {
-    font-size: 40px;
+    width: 56px;
+    height: 56px;
   }
 
   .wihs-benefit-title {
@@ -174,7 +217,8 @@
   }
 
   .wihs-benefit-icon {
-    font-size: 36px;
+    width: 48px;
+    height: 48px;
   }
 
   .wihs-benefit-title {
