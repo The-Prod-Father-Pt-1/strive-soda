@@ -239,7 +239,13 @@
       line-height: 0 !important;
     }
 
-    /* On mobile with fixed/absolute header, adjust height calculation */
+    /* For STICKY header: add padding to push hero below header (no overlap) */
+    body.hpsticky .hero[sid="{{ section.id }}"]{
+      padding-top: var(--headerGroupHeight, 0px) !important;
+      box-sizing: border-box !important;
+    }
+
+    /* On mobile with fixed/absolute header, adjust height calculation (homepage overlay - no padding) */
     body.hpfixed .hero[sid="{{ section.id }}"],
     body.hpabsolute .hero[sid="{{ section.id }}"]{
       min-height: 100dvh !important;
@@ -382,9 +388,9 @@
     .hero[sid="{{ section.id }}"]{
       display: flex;
       flex-direction: column;
-      min-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
-      height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
-      max-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
+      min-height: 100vh !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
       position: relative;
       margin: 0 !important;
       padding: 0 !important;
@@ -392,23 +398,18 @@
       font-size: 0 !important;
       line-height: 0 !important;
       overflow: hidden !important;
+      box-sizing: border-box !important;
     }
 
-    /* For sticky header: account for header height */
+    /* For STICKY header: add padding to push hero below header (no overlap) */
     body.hpsticky .hero[sid="{{ section.id }}"]{
-      min-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
-      height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
-      max-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
-      margin-top: 0 !important;
+      padding-top: var(--headerGroupHeight, 0px) !important;
     }
 
-    /* For fixed/absolute headers: full viewport height */
+    /* For fixed/absolute headers: full viewport height (homepage overlay - no padding) */
     body.hpfixed .hero[sid="{{ section.id }}"],
     body.hpabsolute .hero[sid="{{ section.id }}"]{
       padding-top: 0 !important;
-      min-height: 100vh !important;
-      height: 100vh !important;
-      max-height: 100vh !important;
     }
 
     /* Teal content panel - ORDER 1 (appears first visually, flush with header) */
@@ -515,7 +516,7 @@
     .hero[sid="{{ section.id }}"]{
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: calc(100vh - var(--headerGroupHeight, 0px));
+      grid-template-rows: 100vh;
       gap: 0 !important;
       padding: 0 !important;
       margin: 0 !important;
@@ -527,14 +528,16 @@
       left: 0;
       right: 0;
       overflow: hidden;
+      box-sizing: border-box !important;
     }
 
-    /* For sticky header: account for header height */
+    /* For STICKY header: add padding to push hero below header (no overlap) */
     body.hpsticky .hero[sid="{{ section.id }}"]{
+      padding-top: var(--headerGroupHeight, 0px) !important;
       grid-template-rows: calc(100vh - var(--headerGroupHeight, 0px));
     }
 
-    /* With fixed/absolute header, full viewport height */
+    /* With fixed/absolute header, full viewport height (homepage overlay - no padding) */
     body.hpfixed .hero[sid="{{ section.id }}"],
     body.hpabsolute .hero[sid="{{ section.id }}"]{
       grid-template-rows: 100vh;
