@@ -159,10 +159,9 @@
     padding-top: 0 !important;
   }
 
-  /* Account for fixed header on homepage - prevent header overlap */
-  body.hpfixed .hero[sid="{{ section.id }}"],
-  body.hpabsolute .hero[sid="{{ section.id }}"]{
-    padding-top: var(--headerGroupHeight, 0px);
+  /* Base hero section - let breakpoint-specific CSS handle header height */
+  .hero[sid="{{ section.id }}"]{
+    box-sizing: border-box;
   }
 
   /* CTA look - CONSISTENT SIZING */
@@ -378,14 +377,14 @@
     }
   }
 
-  /* ===== TABLET (778px - 1023px): Hybrid layout to prevent header overlap ===== */
-  @media (min-width: 778px) and (max-width: 1023px){
+  /* ===== TABLET (778px - 1279px): Hybrid layout to prevent header overlap ===== */
+  @media (min-width: 778px) and (max-width: 1279px){
     .hero[sid="{{ section.id }}"]{
       display: flex;
       flex-direction: column;
-      min-height: 100vh !important;
-      height: 100vh !important;
-      max-height: 100vh !important;
+      min-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
+      height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
+      max-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
       position: relative;
       margin: 0 !important;
       padding: 0 !important;
@@ -395,7 +394,15 @@
       overflow: hidden !important;
     }
 
-    /* Ensure proper spacing for fixed/absolute headers - padding on hero container */
+    /* For sticky header: account for header height */
+    body.hpsticky .hero[sid="{{ section.id }}"]{
+      min-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
+      height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
+      max-height: calc(100vh - var(--headerGroupHeight, 0px)) !important;
+      margin-top: 0 !important;
+    }
+
+    /* For fixed/absolute headers: full viewport height */
     body.hpfixed .hero[sid="{{ section.id }}"],
     body.hpabsolute .hero[sid="{{ section.id }}"]{
       padding-top: 0 !important;
@@ -503,12 +510,12 @@
     }
   }
 
-  /* ===== DESKTOP (>=1024px): full-bleed horizontal split ===== */
-  @media (min-width: 1024px){
+  /* ===== DESKTOP (>=1280px): full-bleed horizontal split ===== */
+  @media (min-width: 1280px){
     .hero[sid="{{ section.id }}"]{
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 100vh;
+      grid-template-rows: calc(100vh - var(--headerGroupHeight, 0px));
       gap: 0 !important;
       padding: 0 !important;
       margin: 0 !important;
@@ -522,7 +529,12 @@
       overflow: hidden;
     }
 
-    /* With fixed/absolute header, NO padding-top adjustment on desktop */
+    /* For sticky header: account for header height */
+    body.hpsticky .hero[sid="{{ section.id }}"]{
+      grid-template-rows: calc(100vh - var(--headerGroupHeight, 0px));
+    }
+
+    /* With fixed/absolute header, full viewport height */
     body.hpfixed .hero[sid="{{ section.id }}"],
     body.hpabsolute .hero[sid="{{ section.id }}"]{
       grid-template-rows: 100vh;
